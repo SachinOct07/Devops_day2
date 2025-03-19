@@ -1,16 +1,16 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE = "paddy1123/docker-app:latest"  // Change this to your registry
+        DOCKER_IMAGE = "sachinoct/docker-app:latest"  // Change this to your registry
         CONTAINER_NAME = "docker-running-app"
-        REGISTRY_CREDENTIALS = "docker-hub-credentials"  // Jenkins credentials ID
+        REGISTRY_CREDENTIALS = "docker-sachin"  // Jenkins credentials ID
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'github-padma', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
-                    git url: "https://$GIT_USER:$GIT_TOKEN@github.com/PadmavathyNarayanan/jenkins-docker-demo.git", branch: 'main'
+                withCredentials([usernamePassword(credentialsId: 'SachinOct07', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
+                    git url: "https://$GIT_USER:$GIT_TOKEN@github.com/SachinOct07/Devops_day2.git", branch: 'main'
                 }
             }
         }
@@ -23,7 +23,7 @@ pipeline {
 
         stage('Login to Docker Registry') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker-sachin', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
                 }
             }
